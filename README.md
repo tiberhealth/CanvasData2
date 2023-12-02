@@ -21,9 +21,9 @@ Usage: main.py [OPTIONS]
 | sleep-between-attempts-seconds            | INTEGER                         | Number of seconds to pause when a thread receives and error before attempting again               |         1         |
 | thread-pause                              | INTEGER                         | Number of seconds to pause between download thread starts.                                        |       0.25        |
 | log-level                                 | TEXT                            | Logging detail level. Values: DEBUG, DETAIL,WARNING, ERROR, LOG_SYSTEM                            |      DETAIL       |
-| schema-only / --no-schema-only            | bool                            | Flag to only include the SQL schema scripts. No data download                                     |  no-schema-only   |
-| no-schema / --no-no-schema                | bool                            | Flag to not generate the SQL Schema scripts                                                       |   no-no-schema    |
-| include-sql-load / --no-include-sql-load  | bool                            | Flag as to include the SQL Load statements in the SQL scripts                                     | include-sql-load  |
+| schema-only / no-schema-only            | bool                            | Flag to only include the SQL schema scripts. No data download                                     |  False [ no-schema-only ]   |
+| no-schema / no-no-schema                | bool                            | Flag to not generate the SQL Schema scripts                                                       |   False [ no-no-schema ]    |
+| include-sql-load / no-include-sql-load  | bool                            | Flag as to include the SQL Load statements in the SQL scripts                                     | True [ include-sql-load ]  |
 | workspace-root                            | TEXT                            | Root location for generated files                                                                 |    ./workspace    |
 | csv-workspace                             | TEXT                            | Location for the table CSV files. Overrides the default location under --workspace_root           |       None        |
 | sql-workspace                             | TEXT                            | Location for the table SQL and load script. Overrides the default location under --workspace_root |       None        |
