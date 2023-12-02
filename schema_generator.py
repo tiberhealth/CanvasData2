@@ -40,6 +40,10 @@ class SchemaGenerator:
 
         return key_list if not None else [] + field_list if not None else []
 
+    @property
+    def columns(self):
+        return {**self.keys,  **self.fields, **self.meta}.items()
+
     @staticmethod
     def is_valid_schema_object(schema_object):
         return schema_object is not None and hasattr(schema_object, 'schema') and schema_object.schema is not None
@@ -100,7 +104,7 @@ class SchemaGenerator:
     def build_columns(self) -> str:
         sql = []
 
-        columns = {**self.keys,  **self.fields, **self.meta}.items()
+        columns = self.columns
         field_name_length = max(len(name) for name, definition in columns) + 4
 
         [sql.append(self.build_column(name, definition, field_name_length).rstrip(' ')) for name, definition in columns]
@@ -246,7 +250,8 @@ class SchemaGenerator:
             return "## No fields defined - unable to generate load script"
 
         csv_file_abs = os.path.abspath(f"{csv_file[constants.csv_detail_file]}")
-        load_sql  = list();
+        load_sql  = list()
+        set_sql = list()
 
         load_sql.append("load data\n")
         load_sql.append(f"local infile '{csv_file_abs}'\n")
@@ -256,12 +261,61 @@ class SchemaGenerator:
         load_sql.append("ignore 1 rows\n")
         load_sql.append("(\n  ")
 
-        fields = [f"`{field.split('.')[1]}`" for field in csv_file[constants.csv_detail_headers]]
-        load_sql.append(",\n  ".join(fields))
+        column_fields = list()
+        table_columns = self.columns.mapping
+        for csv_field in csv_file[constants.csv_detail_headers]:
+            field = csv_field.split('.')[1]
+            table_field = table_columns[field] if field in table_columns else None
 
-        load_sql.append("\n);\n\n")
+            if table_field is None:
+                self._logger.error(f"Field {field} is not part of table {self.table_name} in csv file {csv_file_abs} ")
+                continue
 
+            case_function = self.handle_switch(
+                table_field["type"],
+                None,
+                {
+                    "integer": SchemaGenerator.loader_number_field,
+                    "string": SchemaGenerator.loader_string_field,
+                    "boolean": SchemaGenerator.loader_boolean_field,
+                    "number": SchemaGenerator.loader_number_field,
+                }
+            ) if "type" in table_field else None
+
+            if case_function is not None:
+                field = case_function(field, set_sql, table_field)
+
+            column_fields.append(field if field.startswith('@') else f"`{field}`")
+
+        load_sql.append(",\n  ".join(column_fields))
+
+        load_sql.append("\n)\n")
+
+        if set_sql is not None and len(set_sql) >= 0:
+            load_sql.append("SET ")
+            load_sql.append(f",\n{' '.ljust(4, ' ')}".join(set_sql))
+
+        load_sql.append(";\n\n")
         if constants.csv_detail_row_count in csv_file and csv_file[constants.csv_detail_row_count] is not None:
             load_sql.append(f"# Expecting {self._settings.readable_number(csv_file[constants.csv_detail_row_count])} rows")
 
         return "".join(load_sql)
+
+    @staticmethod
+    def loader_number_field(field, set_sql, table_field) -> str:
+        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL Else @{field} END")
+        return f"@{field}"
+
+    @staticmethod
+    def loader_string_field(field, set_sql, table_field) -> str:
+        if "format" not in table_field or table_field["format"] != "date-time":
+            return field
+
+        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL Else STR_TO_DATE(@{field}, '%Y-%m-%dT%H:%i:%s.%fZ') END")
+        return f"@{field}"
+
+    @staticmethod
+    def loader_boolean_field(field, set_sql, table_field) -> str:
+        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL THEN NULL WHEN lcase(@{field}) = 'true' Then TRUE Else FALSE END")
+        return f"@{field}"
+

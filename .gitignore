@@ -2,6 +2,7 @@ canvas.yml
 .DS_Store
 **/.DS_Store
 .idea
+workspace   
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
