@@ -49,7 +49,7 @@ def extract(
         csv_workspace: Annotated[str, typer.Option(help="Location for the table CSV files. Overrides the default location under --workspace_root")] = None,
         sql_workspace: Annotated[str, typer.Option(help="Location for the table SQL and load script. Overrides the default location under --workspace_root")] = None,
         raw_workspace: Annotated[str, typer.Option(help="Location for the RAW data files. Overrides the default location under --workspace_root")] = None,
-        env_locale: Annotated[str, typer.Option(help="Max concurrent download threads")] = "en_US.UTF-8",
+        env_locale: Annotated[str, typer.Option(help="he locale setting for output strings and numbers")] = "en_US.UTF-8",
         tables: Annotated[str, typer.Option(help="Tables to download from CD2. Semi-colon or comma seperated")] = None,
         excluded_tables: Annotated[str, typer.Option(help="List of tables to exclude from the CD2 download. Semi-colon or comma separated")] = None,
         dap_yaml: Annotated[str, typer.Option(help="Location of the YAML with the Canvas instance credentials")] = constants.default_dap_yaml,
