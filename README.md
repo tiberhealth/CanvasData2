@@ -20,10 +20,10 @@ Usage: main.py [OPTIONS]
 | csv-field-size-limit                      | INTEGER                         | Maximum size of a CSV file                                                                        |     Max Value     |
 | sleep-between-attempts-seconds            | INTEGER                         | Number of seconds to pause when a thread receives and error before attempting again               |         1         |
 | thread-pause                              | INTEGER                         | Number of seconds to pause between download thread starts.                                        |       0.25        |
-| log-level                                 | TEXT                            | Logging detail level. Values: DEBUG, DETAIL,WARNING, ERROR, LOG_SYSTEM                            |      DETAIL       |
-| schema-only<br />no-schema-only            | bool                            | Flag to only include the SQL schema scripts. No data download                                     |  False [ no-schema-only ]   |
-| no-schema<br />no-no-schema                | bool                            | Flag to not generate the SQL Schema scripts                                                       |   False [ no-no-schema ]    |
-| include-sql-load<br />no-include-sql-load  | bool                            | Flag as to include the SQL Load statements in the SQL scripts                                     | True [ include-sql-load ]  |
+| log-level                                 | TEXT                            | Logging detail level.<br />Values: DEBUG, DETAIL,WARNING, ERROR, LOG_SYSTEM                            |      DETAIL       |
+| schema-only<br />no-schema-only            | bool                            | Flag to only include the SQL schema scripts. No data download                                     |  False<br />[ no-schema-only ]   |
+| no-schema<br />no-no-schema                | bool                            | Flag to not generate the SQL Schema scripts                                                       |   False<br />[ no-no-schema ]    |
+| include-sql-load<br />no-include-sql-load  | bool                            | Flag as to include the SQL Load statements in the SQL scripts                                     | True<br />[ include-sql-load ]  |
 | workspace-root                            | TEXT                            | Root location for generated files                                                                 |    ./workspace    |
 | csv-workspace                             | TEXT                            | Location for the table CSV files. Overrides the default location under --workspace_root           |       None        |
 | sql-workspace                             | TEXT                            | Location for the table SQL and load script. Overrides the default location under --workspace_root |       None        |
