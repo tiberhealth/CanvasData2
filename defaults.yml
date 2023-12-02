@@ -1,0 +1,6 @@
+# concurrent_limit: 1
+# log_level: "DEBUG"
+# schema_only: True
+# tables: "users;wikis,accounts;peterpan"
+# tables: "groups"
+# excluded_tables: "users;wikis,accounts;peterpan"
