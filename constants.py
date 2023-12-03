@@ -16,6 +16,6 @@ default_log_level = LogLevel.DETAIL
 default_settings_yaml = "./defaults.yml"
 default_dap_yaml="./canvas.yml"
 
-csv_detail_row_count = "row_count"
-csv_detail_file = "file"
-csv_detail_headers = "headers"
+tsv_detail_row_count = "row_count"
+tsv_detail_file = "file"
+tsv_detail_headers = "headers"

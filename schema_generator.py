@@ -241,34 +241,35 @@ class SchemaGenerator:
         else:
             return []
 
-    def load_file(self, csv_file) -> str:
+    def load_file(self, tsv_file) -> str:
 
-        if constants.csv_detail_file not in csv_file or len(csv_file[constants.csv_detail_file]) <= 0:
+        if constants.tsv_detail_file not in tsv_file or len(tsv_file[constants.tsv_detail_file]) <= 0:
             return "## File not found - unable to generate load script"
 
-        if constants.csv_detail_headers not in csv_file or len(csv_file[constants.csv_detail_headers]) <= 0:
+        if constants.tsv_detail_headers not in tsv_file or len(tsv_file[constants.tsv_detail_headers]) <= 0:
             return "## No fields defined - unable to generate load script"
 
-        csv_file_abs = os.path.abspath(f"{csv_file[constants.csv_detail_file]}")
+        tsv_file_abs = os.path.abspath(f"{tsv_file[constants.tsv_detail_file]}")
         load_sql  = list()
         set_sql = list()
 
         load_sql.append("load data\n")
-        load_sql.append(f"local infile '{csv_file_abs}'\n")
+        load_sql.append(f"local infile '{tsv_file_abs}'\n")
         load_sql.append(f"into table `{self.table_name}` ")
-        load_sql.append("fields terminated by ',' ")
-        load_sql.append("optionally enclosed by '\"'\n")
+        load_sql.append("fields terminated by '\t' ")
+        load_sql.append("optionally enclosed by '\"' ")
+        load_sql.append("lines terminated by '\\n'")
         load_sql.append("ignore 1 rows\n")
         load_sql.append("(\n  ")
 
         column_fields = list()
         table_columns = self.columns.mapping
-        for csv_field in csv_file[constants.csv_detail_headers]:
-            field = csv_field.split('.')[1]
+        for tsv_field in tsv_file[constants.tsv_detail_headers]:
+            field = tsv_field.split('.')[1]
             table_field = table_columns[field] if field in table_columns else None
 
             if table_field is None:
-                self._logger.error(f"Field {field} is not part of table {self.table_name} in csv file {csv_file_abs} ")
+                self._logger.error(f"Field {field} is not part of table {self.table_name} in csv file {tsv_file_abs} ")
                 continue
 
             case_function = self.handle_switch(
@@ -301,8 +302,8 @@ class SchemaGenerator:
 
         load_sql.append("\n\n")
 
-        if constants.csv_detail_row_count in csv_file and csv_file[constants.csv_detail_row_count] is not None:
-            load_sql.append(f"# Expecting {self._settings.readable_number(csv_file[constants.csv_detail_row_count])} rows")
+        if constants.tsv_detail_row_count in tsv_file and tsv_file[constants.tsv_detail_row_count] is not None:
+            load_sql.append(f"# Expecting {self._settings.readable_number(tsv_file[constants.tsv_detail_row_count])} rows")
 
         return "".join(load_sql)
 

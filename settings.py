@@ -23,7 +23,7 @@ class Settings:
                  include_sql_load = True,
                  import_warnings = False,
                  workspace_root = constants.default_root_workspace,
-                 csv_workspace = None,
+                 tsv_workspace = None,
                  sql_workspace = None,
                  raw_workspace = None,
                  env_locale = "en_US.UTF-8",
@@ -49,7 +49,7 @@ class Settings:
         self.dap_yaml_file = dap_yaml_file
 
         self.workspace_root = workspace_root
-        self.csv_workspace = csv_workspace
+        self.tsv_workspace = tsv_workspace
         self.sql_workspace = sql_workspace
         self.raw_workspace = raw_workspace
 
@@ -87,7 +87,7 @@ class Settings:
             self.dap_yaml_file = config.get("dap_yaml_file", self.dap_yaml_file)
 
             self.workspace_root = config.get("workspace_root", self.workspace_root)
-            self.csv_workspace = config.get("csv_workspace", self.csv_workspace)
+            self.tsv_workspace = config.get("csv_workspace", self.tsv_workspace)
             self.sql_workspace = config.get("sql_workspace", self.sql_workspace)
             self.raw_workspace = config.get("raw_workspace", self.raw_workspace)
 

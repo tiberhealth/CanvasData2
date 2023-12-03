@@ -11,7 +11,7 @@ from logger import Logger, LogLevel
 
 from datetime import datetime
 
-from csv_generator import CsvGenerator
+from tsv_generator import TsvGenerator
 from dap_client import DapClient
 from settings import Settings
 from workspace import Workspace
@@ -47,7 +47,7 @@ def extract(
         include_sql_load: Annotated[bool, typer.Option(help="Flag as to include the SQL Load statements in the SQL scripts")] = True,
         import_warnings: Annotated[bool, typer.Option(help="Flag indicating if warnings and errors should display after imports")] = False,
         workspace_root: Annotated[str, typer.Option(help="Root location for generated files")] = constants.default_root_workspace,
-        csv_workspace: Annotated[str, typer.Option(help="Location for the table CSV files. Overrides the default location under --workspace_root")] = None,
+        tsv_workspace: Annotated[str, typer.Option(help="Location for the table TSV files. Overrides the default location under --workspace_root")] = None,
         sql_workspace: Annotated[str, typer.Option(help="Location for the table SQL and load script. Overrides the default location under --workspace_root")] = None,
         raw_workspace: Annotated[str, typer.Option(help="Location for the RAW data files. Overrides the default location under --workspace_root")] = None,
         env_locale: Annotated[str, typer.Option(help="he locale setting for output strings and numbers")] = "en_US.UTF-8",
@@ -70,7 +70,7 @@ def extract(
         include_sql_load=include_sql_load,
         import_warnings=import_warnings,
         workspace_root=workspace_root,
-        csv_workspace=csv_workspace,
+        tsv_workspace=tsv_workspace,
         sql_workspace=sql_workspace,
         raw_workspace=raw_workspace,
         env_locale=env_locale,
@@ -92,14 +92,14 @@ async def process(settings):
     client = DapClient(logger, workspace, settings)
     meta = await client.get_tables()
 
-    csv_headers = None
+    tsv_headers = None
     if not settings.schema_only:
         if ('files' in meta) and (len(meta['files']) > 0):
-            csv_details = CsvGenerator(logger, workspace, settings).build(meta['files'])
+            tsv_details = TsvGenerator(logger, workspace, settings).build(meta['files'])
 
     if not settings.no_schema:
         if ('schema' in meta) and (len(meta['schema']) > 0):
-            (SchemaWriter(logger, workspace, settings).write(meta['schema'], csv_details))
+            (SchemaWriter(logger, workspace, settings).write(meta['schema'], tsv_details))
 
 
 if __name__ == '__main__':

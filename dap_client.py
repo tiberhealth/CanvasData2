@@ -131,7 +131,7 @@ class DapClient:
                 asset = await session.download_table_data(
                     self.namespace,
                     table_name,
-                    SnapshotQuery(format=Format.CSV, filter=None),
+                    SnapshotQuery(format=Format.TSV, filter=None),
                     self._workspace.raw)
 
                 self._logger.debug(f"Table {table_name} downloaded - attempt {attempt + 1}")

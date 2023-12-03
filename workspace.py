@@ -4,11 +4,11 @@ import shutil
 
 class Workspace:
 
-    def __init__(self, logger, settings, root_path="./workspace", raw_path=None, csv_path=None, sql_path=None):
+    def __init__(self, logger, settings, root_path="./workspace", raw_path=None, tsv_path=None, sql_path=None):
 
         self._root_path = settings.workspace_root or root_path
         self._raw_path = settings.raw_workspace or raw_path
-        self._csv_path = settings.csv_workspace or csv_path
+        self._tsv_path = settings.tsv_workspace or tsv_path
         self._sql_path = settings.sql_workspace or sql_path
 
         self._logger = logger
@@ -18,8 +18,8 @@ class Workspace:
         return self._raw_path or f"{self._root_path}/raw"
 
     @property
-    def csv(self) -> str:
-        return self._csv_path or f"{self._root_path}/csv"
+    def tsv(self) -> str:
+        return self._tsv_path or f"{self._root_path}/tsv"
 
     @property
     def sql(self) -> str:
@@ -27,7 +27,7 @@ class Workspace:
 
     def initialize(self):
         self.clear_workspace(self.raw)
-        self.clear_workspace(self.csv)
+        self.clear_workspace(self.tsv)
         self.clear_workspace(self.sql)
 
     def clear_workspace(self, workspace_directory, create_new = True) -> str:

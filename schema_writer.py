@@ -11,7 +11,7 @@ class SchemaWriter:
         self.workspace = workspace
         self.settings = settings
 
-    def write(self, schema, csv_files = None):
+    def write(self, schema, tsv_files = None):
         self.logger.detail("Starting SQL File Generation")
         self.logger.debug(f"Writing file to SQL Root {self.workspace.sql}")
 
@@ -19,8 +19,8 @@ class SchemaWriter:
 
         source_files = []
         for key, schema in schema.items():
-            csv_file = csv_files.get(key, None) if csv_files is not None else None
-            source_files.append(self.write_table_sql(schema, pbar, csv_file))
+            tsv_file = tsv_files.get(key, None) if tsv_files is not None else None
+            source_files.append(self.write_table_sql(schema, pbar, tsv_file))
 
         self.write_control_sql(source_files)
 
@@ -29,7 +29,7 @@ class SchemaWriter:
 
         self.logger.detail("Completed SQL File Generation")
 
-    def write_table_sql(self, schema, pbar, csv_file) -> str:
+    def write_table_sql(self, schema, pbar, tsv_file) -> str:
         workspace_file = f"{self.workspace.sql}/{schema.table_name}.sql"
 
         self.logger.debug(f"Starting creating sql file: {workspace_file}")
@@ -38,17 +38,17 @@ class SchemaWriter:
             sql_file.write(f"#\n# Sql Create for Table: {schema.table_name}\n")
             sql_file.write(f"# Generated: {datetime.utcnow()}\n")
 
-            if csv_file is not None and self.settings.include_sql_load:
+            if tsv_file is not None and self.settings.include_sql_load:
                 sql_file.write("# Including SQL Load script")
 
             self.header_commen(sql_file)
             sql_file.write(schema.table_sql())
             sql_file.write("\n")
 
-            if csv_file is not None and self.settings.include_sql_load:
+            if tsv_file is not None and self.settings.include_sql_load:
                 sql_file.write("\n\n")
                 sql_file.write("# Sql Load\n\n")
-                sql_file.write(schema.load_file(csv_file))
+                sql_file.write(schema.load_file(tsv_file))
                 sql_file.write("\n")
 
             self.finish_sql_file(sql_file)
