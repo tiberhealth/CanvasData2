@@ -295,7 +295,12 @@ class SchemaGenerator:
             load_sql.append("SET ")
             load_sql.append(f",\n{' '.ljust(4, ' ')}".join(set_sql))
 
-        load_sql.append(";\n\n")
+        load_sql.append(";\n")
+        if (self._settings.import_warnings):
+            load_sql.append("\nshow warnings;\n")
+
+        load_sql.append("\n\n")
+
         if constants.csv_detail_row_count in csv_file and csv_file[constants.csv_detail_row_count] is not None:
             load_sql.append(f"# Expecting {self._settings.readable_number(csv_file[constants.csv_detail_row_count])} rows")
 
@@ -311,11 +316,11 @@ class SchemaGenerator:
         if "format" not in table_field or table_field["format"] != "date-time":
             return field
 
-        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL Else STR_TO_DATE(@{field}, '%Y-%m-%dT%H:%i:%s.%fZ') END")
+        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL Else COALESCE(STR_TO_DATE(@{field}, '%Y-%m-%dT%H:%i:%s.%fZ'), STR_TO_DATE(@{field}, '%Y-%m-%dT%H:%i:%sZ')) END")
         return f"@{field}"
 
     @staticmethod
     def loader_boolean_field(field, set_sql, table_field) -> str:
-        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL THEN NULL WHEN lcase(@{field}) = 'true' Then TRUE Else FALSE END")
+        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL WHEN @{field} IS NULL THEN NULL WHEN lcase(@{field}) = 'true' Then TRUE Else FALSE END")
         return f"@{field}"
 

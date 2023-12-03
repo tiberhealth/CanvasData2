@@ -21,6 +21,7 @@ class Settings:
                  schema_only = False,
                  no_schema = False,
                  include_sql_load = True,
+                 import_warnings = False,
                  workspace_root = constants.default_root_workspace,
                  csv_workspace = None,
                  sql_workspace = None,
@@ -40,6 +41,7 @@ class Settings:
         self.thread_pause = thread_pause
         self.schema_only = schema_only
         self.include_sql_load = include_sql_load
+        self.import_warnings = import_warnings
         self.no_schema = no_schema
         self.env_locale = env_locale
         self.tables = tables
@@ -77,6 +79,7 @@ class Settings:
             self.schema_only = config.get("schema_only", self.schema_only)
             self.schema_only = config.get("no_schema", self.schema_only)
             self.include_sql_load = config.get("include_sql_load", self.include_sql_load)
+            self.import_warnings = config.get("import_warnings", self.import_warnings)
             self.env_locale = config.get("env_locale", self.env_locale)
             self.tables = config.get("tables", self.tables)
             self.excluded_tables = config.get("excluded_tables", self.excluded_tables)
