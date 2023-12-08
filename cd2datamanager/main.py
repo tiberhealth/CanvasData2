@@ -99,6 +99,10 @@ async def process(settings):
             (SchemaWriter(logger, workspace, settings).write(meta['schema'], tsv_details))
 
 
-if __name__ == '__main__':
+def entry_point():
     display_title(Logger(LogLevel.WARNING))
     app()
+
+
+if __name__ == '__main__':
+    entry_point()
