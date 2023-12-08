@@ -1,5 +1,4 @@
 import asyncio
-import sys
 import typer
 
 import constants
