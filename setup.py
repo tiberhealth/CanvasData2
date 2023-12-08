@@ -16,5 +16,10 @@ setup(
         "tqdm",
         "PyYaml",
         "typer"
-    ]
+    ],
+    entry_points={
+        "console_scripts": [
+            "cd2datamanager = cd2datamanager.main",
+        ]
+    }
 )
