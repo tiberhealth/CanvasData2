@@ -2,7 +2,8 @@ from setuptools import setup, find_packages
 
 setup(
     name='cd2datamanager',
-    version='1.0.7',
+    use_scm_version=True,  # Enable setuptools_scm for versioning
+    setup_requires=['setuptools_scm'],  # Add setuptools_scm as a setup requirement
     packages=find_packages(),
     url='https://github.com/tiberhealth/CanvasData2',
     license='',
