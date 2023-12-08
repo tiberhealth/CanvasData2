@@ -1,14 +1,14 @@
 import asyncio
 import yaml
 
-import constants
+import cd2datamanager.constants as constants
 
 from tqdm import tqdm
 from dap.api import DAPClient, DAPSession
 from dap.dap_types import Credentials, Format, SnapshotQuery
 
-from semaphore_control import SemaphoreControl
-from schema_generator import SchemaGenerator
+from cd2datamanager.semaphore_control import SemaphoreControl
+from cd2datamanager.schema_generator import SchemaGenerator
 
 
 class DapClient:

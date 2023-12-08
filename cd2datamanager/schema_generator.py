@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 import os.path
-
-import constants
+import cd2datamanager.constants as constants
 
 
 class SchemaGenerator:

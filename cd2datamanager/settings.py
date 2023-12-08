@@ -1,10 +1,9 @@
 import locale
 import os.path
-import sys
 import yaml
 
-import constants
-from logger import LogLevel
+import cd2datamanager.constants as constants
+from cd2datamanager.logger import LogLevel
 
 
 class Settings:

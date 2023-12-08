@@ -2,10 +2,10 @@ import csv
 import gzip
 import io
 import os.path
-import constants
+import cd2datamanager.constants as constants
 
 from tqdm import tqdm
-from settings import Settings
+from cd2datamanager.settings import Settings
 
 
 class TsvGenerator:
