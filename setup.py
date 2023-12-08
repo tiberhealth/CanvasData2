@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='cd2datamanager',
-    version='1.0.5',
+    version='1.0.7',
     packages=find_packages(),
     url='https://github.com/tiberhealth/CanvasData2',
     license='',
