@@ -14,7 +14,6 @@ class Settings:
                  max_download_attempts=constants.default_max_download_attempts,
                  semaphore_timeout_seconds=constants.default_semaphore_timeout_seconds,
                  max_lock_attempts= constants.default_max_lock_attempts,
-                 csv_field_size_limit=sys.maxsize,
                  sleep_between_attempts_seconds = constants.default_sleep_between_attempts_seconds,
                  thread_pause = constants.default_thread_pause,
                  log_level=constants.default_log_level.name,
@@ -35,7 +34,6 @@ class Settings:
         self.concurrent_limit = concurrent_limit
         self.max_download_attempts = max_download_attempts
         self.semaphore_timeout_seconds = semaphore_timeout_seconds
-        self.csv_field_size_limit = csv_field_size_limit
         self.max_lock_attempts = max_lock_attempts
         self.sleep_between_attempts_seconds = sleep_between_attempts_seconds
         self.thread_pause = thread_pause
@@ -72,7 +70,6 @@ class Settings:
             self.concurrent_limit = config.get("concurrent_limit", self.concurrent_limit)
             self.max_download_attempts = config.get("max_download_attempts", self.max_download_attempts)
             self.semaphore_timeout_seconds = config.get("semaphore_timeout_seconds", self.semaphore_timeout_seconds)
-            self.csv_field_size_limit = config.get("csv_field_size_limit", self.csv_field_size_limit)
             self.max_lock_attempts = config.get("max_lock_attempts", self.max_lock_attempts)
             self.sleep_between_attempts_seconds = config.get("sleep_between_attempts_seconds", self.sleep_between_attempts_seconds)
             self.thread_pause = config.get("thread_pause", self.thread_pause)

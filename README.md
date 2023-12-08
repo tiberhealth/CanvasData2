@@ -17,7 +17,6 @@ Usage: main.py [OPTIONS]
 | max-download-attempts                     | INTEGER                        | Number of time to attempt to download a table if an error occurs before aborting orskipping table |               3                |
 | semaphore-timeout-seconds                 | INTEGER                        | Number of seconds to wait for a semaphore lock before aborting or trying again                    |              120               |
 | max-lock-attempts                         | INTEGER                        | Number of attempts allowed for grabbing a semaphore lock before throwing error                    |               3                |
-| csv-field-size-limit                      | INTEGER                        | Maximum size of a CSV file                                                                        |           Max Value            |
 | sleep-between-attempts-seconds            | INTEGER                        | Number of seconds to pause when a thread receives and error before attempting again               |               1                |
 | thread-pause                              | INTEGER                        | Number of seconds to pause between download thread starts.                                        |              0.25              |
 | log-level                                 | TEXT                           | Logging detail level.<br />Values: DEBUG, DETAIL,WARNING, ERROR, LOG_SYSTEM                       |             DETAIL             |

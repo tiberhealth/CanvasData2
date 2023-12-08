@@ -257,7 +257,6 @@ class SchemaGenerator:
         load_sql.append(f"local infile '{tsv_file_abs}'\n")
         load_sql.append(f"into table `{self.table_name}` ")
         load_sql.append("fields terminated by '\t' ")
-        load_sql.append("optionally enclosed by '\"' ")
         load_sql.append("lines terminated by '\\n'")
         load_sql.append("ignore 1 rows\n")
         load_sql.append("(\n  ")
@@ -317,7 +316,7 @@ class SchemaGenerator:
         if "format" not in table_field or table_field["format"] != "date-time":
             return field
 
-        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL Else COALESCE(STR_TO_DATE(@{field}, '%Y-%m-%dT%H:%i:%s.%fZ'), STR_TO_DATE(@{field}, '%Y-%m-%dT%H:%i:%sZ')) END")
+        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL WHEN LENGTH({field}) = 20 THEN STR_TO_DATE({field}, '%Y-%m-%dT%H:%i:%sZ') ELSE STR_TO_DATE({field}, '%Y-%m-%dT%H:%i:%s.%fZ')  END")
         return f"@{field}"
 
     @staticmethod

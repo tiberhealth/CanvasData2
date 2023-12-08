@@ -14,8 +14,6 @@ class TsvGenerator:
         self._logger = logger
         self._workspace = workspace
 
-        csv.field_size_limit(settings.csv_field_size_limit)
-
     def build(self, raw_meta) -> dict:
         self._logger.detail(f"Start decompressing raw table files - {len(raw_meta)} files to decompress")
 
