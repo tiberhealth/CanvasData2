@@ -19,7 +19,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "cd2datamanager = cd2datamanager.main:__main__",
+            "cd2datamanager = cd2datamanager:__main__",
         ]
     }
 )
