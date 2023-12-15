@@ -61,7 +61,7 @@ class SchemaWriter:
         return os.path.abspath(workspace_file)
 
     def write_control_sql(self, sources):
-        workspace_file = f"{self.workspace.sql}/build_all.sql"
+        workspace_file = f"{self.workspace.sql}/load_all.sql"
 
         self.logger.debug("Staring creation of build all sql file")
 
