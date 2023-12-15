@@ -23,7 +23,7 @@ class Workspace:
 
     @property
     def sql(self) -> str:
-        return self._sql_path or f"{self._root_path}/sql"
+        return self._sql_path or f"{self._root_path}/sql_loaders"
 
     def initialize(self):
         self.clear_workspace(self.raw)

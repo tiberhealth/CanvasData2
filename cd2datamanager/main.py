@@ -5,7 +5,7 @@ from typer import Typer
 from typing_extensions import Annotated
 from datetime import datetime
 
-from cd2datamanager.logger import Logger, LogLevel
+from tiberlogger.logger import Logger, LogLevel
 from cd2datamanager import constants
 from cd2datamanager.tsv_generator import TsvGenerator
 from cd2datamanager.dap_client import DapClient

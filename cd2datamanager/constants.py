@@ -1,4 +1,4 @@
-from cd2datamanager.logger import LogLevel
+from tiberlogger.logger import LogLevel
 
 default_root_workspace = "./workspace"
 default_semaphore_timeout_seconds = 120

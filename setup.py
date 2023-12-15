@@ -16,7 +16,8 @@ setup(
         "instructure-dap-client",
         "tqdm",
         "PyYaml",
-        "typer"
+        "typer",
+        "tiberlogger"
     ],
     entry_points={
         "console_scripts": [

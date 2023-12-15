@@ -315,7 +315,7 @@ class SchemaGenerator:
         if "format" not in table_field or table_field["format"] != "date-time":
             return field
 
-        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL WHEN LENGTH({field}) = 20 THEN STR_TO_DATE({field}, '%Y-%m-%dT%H:%i:%sZ') ELSE STR_TO_DATE({field}, '%Y-%m-%dT%H:%i:%s.%fZ')  END")
+        set_sql.append(f"`{field}` = CASE WHEN @{field} IS NULL or LENGTH(@{field}) <= 0 Then NULL WHEN INSTR(@{field}, '.') = 0 THEN STR_TO_DATE(@{field}, '%Y-%m-%dT%H:%i:%sZ') ELSE STR_TO_DATE(@{field}, '%Y-%m-%dT%H:%i:%s.%fZ')  END")
         return f"@{field}"
 
     @staticmethod

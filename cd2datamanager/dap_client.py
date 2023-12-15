@@ -5,7 +5,7 @@ import cd2datamanager.constants as constants
 
 from tqdm import tqdm
 from dap.api import DAPClient, DAPSession
-from dap.dap_types import Credentials, Format, SnapshotQuery
+from dap.dap_types import Credentials, Format, SnapshotQuery, Mode
 
 from cd2datamanager.semaphore_control import SemaphoreControl
 from cd2datamanager.schema_generator import SchemaGenerator
@@ -131,7 +131,7 @@ class DapClient:
                 asset = await session.download_table_data(
                     self.namespace,
                     table_name,
-                    SnapshotQuery(format=Format.TSV, filter=None),
+                    SnapshotQuery(format=Format.TSV, filter=None, mode=Mode.condensed),
                     self._workspace.raw)
 
                 self._logger.debug(f"Table {table_name} downloaded - attempt {attempt + 1}")

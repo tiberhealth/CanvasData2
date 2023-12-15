@@ -3,7 +3,7 @@ import os.path
 import yaml
 
 import cd2datamanager.constants as constants
-from cd2datamanager.logger import LogLevel
+from tiberlogger.logger import LogLevel
 
 
 class Settings:
