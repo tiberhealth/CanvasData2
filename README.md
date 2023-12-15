@@ -8,8 +8,18 @@ This tool was written and tested using Python 3.11.
 The tool is currently set up only to handle snapshots, and future development will also include incremental data pulls.
 
 # Usage
+## PIP install
+``` python
+python -m pip install cd2datamanager
+```
+Or
+``` python
+pip install cd2datamanager
+```
+
+## Execute
 ```python
-Usage: main.py [OPTIONS]
+Usage: pythoin -m cd2datamanager [OPTIONS]
 ```
 | switch   [--]                             | Type                           | Description                                                                                       |            Default             |
 |:------------------------------------------|:-------------------------------|:--------------------------------------------------------------------------------------------------|:------------------------------:|
